@@ -1,12 +1,12 @@
 # bouceka-aoc-1
 
-# [Advent of Code 2016 - Day 12: Two-Factor Authentication](https://adventofcode.com/2016/day/12)
+# [Advent of Code 2016 - Day 12: Leonardo's Monorail](https://adventofcode.com/2016/day/12)
 
 ## Overview of problem
 
-My last AOC task is [day 12](https://adventofcode.com/2016/day/12) from 2016. I want to read the instruction from an
+My last AOC task is [day 12](https://adventofcode.com/2016/day/12) - 2016. I want to read the instruction from an
 assembunny code and get value input of `a.`
-We have four registers `a`, `b`, `c`, `d`. All registers start at `0` and they can hold only integer.
+We have four registers `a`, `b`, `c`, and `d`. All registers start at `0,` and  can hold only integers.
 
 The types of instruction we can get are only these:
 
@@ -16,7 +16,7 @@ The types of instruction we can get are only these:
 > - `jnz x y` **jumps** to an instruction `y` away (positive means forward; negative means backward), but only if `x` is
 	not zero.
 
-The set of instruction might look like this:
+The set of instructions might look like this:
 
 ```
 cpy 1 a
@@ -36,8 +36,8 @@ The instructions tell us to shift the numbers throughout the register.
 The solution for the first and second part is almost identical, so I combined them into one section.
 
 Firstly, I created the register with the four letters that hold the integer 0 at the start. I used a map with keys of
-strings and value of integers. I decided to use `String` over `Char` because I wanted to avoid having a problem with the
-file input that returns string.
+strings and values of integers. I decided to use `String` over `Char` because I wanted to avoid having a problem with the
+file input that returns a string.
 
 Also, I have to keep track of steps (iterations), since instruction `jnz` can jump away.
 
@@ -46,11 +46,11 @@ val register = mutableMapOf("a" to 0, "b" to 0, "c" to 0, "d" to 0)
 ```
 
 Secondly, I iterate through the instruction text file line by line. This time I cannot use `.forEach()` as used in
-previous AoC, because of the jump operation we might (and we will) end up iterating more times than is the input
+previous AoC, because of the jump operation, we might (and we will) end up iterating more times than the input
 size/length.
 
 We will iterate the set of instructions based on the steps. It cannot jump below 0 or greater than the length of the
-input file. Each iteration we will use a string split that will prepare the instructions for further operations.
+input file. We will use a string split for each iteration to prepare the instructions for further operations.
 
 ```kotlin
 while (steps <= 0 && steps < input.size) {
@@ -60,8 +60,8 @@ while (steps <= 0 && steps < input.size) {
 ```
 
 Then I take the first word from the instruction array and decide whether we copy a number, decrease, increase or jump
-awy. The first three instructions are pretty straightforward. `cpy` copies an integer from the input and paste it to the
-register or copies value between registers. Increase and decrease changes value by one. After each these operation we
+away. The first three instructions are pretty straightforward. `cpy` copies an integer from the input and pastes it to the
+register or copies value between registers. Increase and decrease changes value by one. After each operations, we
 add one to the `steps` variable. Like so:
 
 ```kotlin
@@ -85,9 +85,9 @@ when (words.first()) {
 ```
 
 The last part is a little more complicated. We check if the jump instruction points to a register first. If it does, we
-check whether in the register is not zero. If it is not a zero, we add the number to the number of steps we "skip" or "
-roll back" in our sets of the instructions. If the register holds zero, we add only 1. Lastly, if the first instruction
-is not a name of a register we automatically jump by the second number.
+check whether the register is not zero. If it is not a zero, we add the number to the number of steps we "skip" or "
+rollback" in our sets of instructions. If the register holds zero, we add only 1. Lastly, if the first instruction
+is not a key of a register, we automatically jump by the second number.
 
 ```kotlin
   "jnz" -> {
@@ -97,7 +97,7 @@ is not a name of a register we automatically jump by the second number.
 }
 ```
 
-The second part was almost identical as the first part. We only start with register `c` to be `0`.
+The second part was almost identical to the first part. We only start with register `c` to be `0`.
 
 ## Reflection
 
@@ -105,7 +105,7 @@ The project took me two afternoons (~6 hours). I struggled with the jump operati
 really simple and straightforward, but it starched my brain.
 
 I am glad I learned how to implement if condition with range of strings by `if (letter in "a".."d")`. It was very
-helpful. The next thing I earned was implementing a map. Normally, if I used JavaScript I would create an object with
+helpful. The next thing I earned was implementing a map. Normally, if I used JavaScript, I would create an object with
 these key values. However, this collection type was even easier to operate with than I expected.
 
 
