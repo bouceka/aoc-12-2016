@@ -7,7 +7,7 @@ fun main() {
 
 		var steps = 0 // keep track of iteration through the list of instructions
 
-		while (steps < input.size) {
+		while (steps <= 0 && steps < input.size) {
 			val words = input[steps].split(" ") // make a list of instructions per line
 			when (words.first()) {
 				"cpy" -> {
